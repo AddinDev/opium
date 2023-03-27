@@ -1,3 +1,5 @@
+[![Build](https://github.com/AddinDev/opium/actions/workflows/python-app.yml/badge.svg)](https://github.com/AddinDev/opium/actions/workflows/python-app.yml)
+
 # opium
 chat gpt discord bot
 
