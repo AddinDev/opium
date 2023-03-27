@@ -1,6 +1,6 @@
 import discord
 import os
-from gpt import gpt
+from gpt import *
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -8,6 +8,7 @@ client = discord.Client(intents=discord.Intents.default())
 
 @client.event
 async def on_ready():
+    await client.change_presence(status=discord.Status.dnd)
     print('We have logged in as {0.user}'.format(client))
 
 @client.event
@@ -23,8 +24,12 @@ async def on_message(message):
     if msg.startswith('q'):
         text = msg.partition(' ')[2]
         print("lookin for: " + text)
-        await message.channel.send('holup..')
-        await message.channel.send(gpt(text))
+        await message.channel.send(chat(text))
+
+    if msg.startswith('g'):
+        text = msg.partition(' ')[2]
+        print("drawing for: " + text)
+        await message.channel.send(img(text))
 
 try:
     client.run(os.getenv("BOT_TOKEN"))
