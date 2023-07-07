@@ -4,7 +4,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        script {
           docker build -t opium .
+        }
       }
     }
 
