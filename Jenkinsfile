@@ -1,7 +1,7 @@
 pipeline {
   agent any
   
-  // stages {
+  stages {
   //   stage('Build') {
   //     steps {
   //         docker build -t opium .
@@ -14,5 +14,5 @@ pipeline {
       }
     }
     
-  // }
+  }
 }
