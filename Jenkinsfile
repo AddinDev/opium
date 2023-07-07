@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-          docker build -t opium:latest .
+          docker build -t opium .
       }
     }
 
