@@ -15,8 +15,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Docker Authentication
       run: docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }} 
-    - name: Create Environment Variables
-      run: echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" >> .env && echo "GPT_TOKEN=${{ secrets.GPT_TOKEN }}" >> .env
     - name: Build Docker Image
       run: docker build . --file Dockerfile --tag akubukanayam/opium 
     - name: Push Image to Docker Registry
