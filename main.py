@@ -1,5 +1,6 @@
 import discord
 import os
+import ngrok
 from gpt import *
 from dotenv import load_dotenv
 
@@ -30,6 +31,12 @@ async def on_message(message):
         text = msg.partition(' ')[2]
         print("drawing for: " + text)
         await message.channel.send(img(text))
+
+    if msg.startswith('ngrok'):
+        client = ngrok.Client("2RH60jgdU6eU6qeZXR1iKLWu0uH_5SBdsAv1xs7UMTd8WQn7g")
+        for t in client.tunnels.list():
+            await message.channel.send(t.public_url + " -> " + t.forwards_to)
+
 
 try:
     client.run(os.getenv("BOT_TOKEN"))

@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    environment: docker
+    steps:
+    - uses: actions/checkout@v3
+    - name: Docker Authentication
+      run: docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }} 
+    - name: Build Docker Image
+      run: docker build . --file Dockerfile --tag akubukanayam/opium 
+    - name: Push Image to Docker Registry
+      run: docker push akubukanayam/opium:latest
