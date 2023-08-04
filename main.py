@@ -14,8 +14,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    # if message.author == client.user:
-        # return
+    if message.author.name == "opium":
+        return
     
     msg = message.content
 
@@ -25,7 +25,11 @@ async def on_message(message):
     if msg.startswith('q'):
         text = msg.partition(' ')[2]
         print("lookin for: " + text)
-        await message.channel.send(chat(text))
+        msg = chat(text)
+        resulting_chunks = split_text_into_array(msg, 2000)
+
+        for idx, chunk in enumerate(resulting_chunks):
+            await message.channel.send(chunk)
 
     if msg.startswith('g'):
         text = msg.partition(' ')[2]
@@ -37,6 +41,23 @@ async def on_message(message):
         for t in client.tunnels.list():
             await message.channel.send(t.public_url + " -> " + t.forwards_to)
 
+
+def split_text_into_array(text, max_words_per_chunk):
+    words = text.split()
+    chunks = []
+    current_chunk = []
+
+    for word in words:
+        if len(" ".join(current_chunk + [word])) > max_words_per_chunk:
+            chunks.append(" ".join(current_chunk))
+            current_chunk = []
+
+        current_chunk.append(word)
+
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
+
+    return chunks
 
 try:
     client.run(os.getenv("BOT_TOKEN"))
